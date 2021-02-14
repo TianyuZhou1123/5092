@@ -32,7 +32,6 @@ namespace MonteC
         //Epsilon means generate the random numbers
         public static double std(int Sims, double[] Price)
         {
-            //the average of matrix C
             double P = Price.Average();
             double[] sum = new double[Sims];
             for (int i = 0; i < Sims; i++)
