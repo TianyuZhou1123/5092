@@ -19,16 +19,17 @@ namespace MonteC
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
+            //S means underlying price
             double S = Convert.ToDouble(textBox_S.Text);
-            //K means strike price
+            //K means Strike price
             double K = Convert.ToDouble(textBox_K.Text);
-            //r means the interest rate
+            //r means the Risk-free rate
             double r = Convert.ToDouble(textBox_R.Text);
-            //Sigma means volatility
+            //Sigma means Volatility
             double Sigma = Convert.ToDouble(textBox_Sigma.Text);
-            //T means tenor
+            //T means Tenor
             double T = Convert.ToDouble(textBox_T.Text);
             //Trials means the trials of Mento Carlo Simulations
             int Trials = Convert.ToInt32(textBox_Trials.Text);
@@ -46,35 +47,18 @@ namespace MonteC
             Option.Steps = steps;
             double[,] RandomNumber = epsilon.Epsilon(Trials, steps);
             Option.Epsilon = RandomNumber;
-            //set the type (including call and put)
+            //set the type 
             if (IsCall.Checked == true)
                 Option.IsCall = true;
             else
                 Option.IsCall = false;
-            //option price
             textBox_OptionPrice.Text = Convert.ToString(EuropeanOption.OptionPrice(S, K, r, Sigma, T, Trials, steps, IsCall.Checked, RandomNumber)[0]);
             textBox_Std.Text = Convert.ToString(EuropeanOption.OptionPrice(S, K, r, Sigma, T, Trials, steps, IsCall.Checked, RandomNumber)[1]);
-            //delta
             textBox_Delta.Text = Convert.ToString(GreekValues.Delta(S, K, r, Sigma, T, Trials, steps, IsCall.Checked, RandomNumber));
-            //gamma
             textBox_Gamma.Text = Convert.ToString(GreekValues.Gamma(S, K, r, Sigma, T, Trials, steps, IsCall.Checked, RandomNumber));
-            //vega
             textBox_Vega.Text = Convert.ToString(GreekValues.Vega(S, K, r, Sigma, T, Trials, steps, IsCall.Checked, RandomNumber));
-            //theta
             textBox_Theta.Text = Convert.ToString(GreekValues.Theta(S, K, r, Sigma, T, Trials, steps, IsCall.Checked, RandomNumber));
-            //rho
             textBox_Rho.Text = Convert.ToString(GreekValues.Rho(S, K, r, Sigma, T, Trials, steps, IsCall.Checked, RandomNumber));
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }
