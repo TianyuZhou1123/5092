@@ -65,5 +65,10 @@ namespace MonteC
                 textBox_Rho.Text = Convert.ToString(GreekValues.Rho(S, K, r, Sigma, T, Trials, steps, IsCall.Checked, RandomNumber));
             }
         }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

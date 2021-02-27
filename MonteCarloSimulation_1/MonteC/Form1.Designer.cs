@@ -266,9 +266,10 @@ namespace MonteC
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(709, 391);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(35, 18);
+            this.label10.Size = new System.Drawing.Size(26, 18);
             this.label10.TabIndex = 25;
-            this.label10.Text = "Std";
+            this.label10.Text = "SE";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // label11
             // 

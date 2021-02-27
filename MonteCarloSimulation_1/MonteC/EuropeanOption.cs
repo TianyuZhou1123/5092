@@ -34,10 +34,11 @@ namespace MonteC
         {
             double P = Price.Average();
             double[] sum = new double[Sims];
-            for (int i = 0; i < Sims; i++)
+            for (int i = 1; i < Sims; i++)
                 sum[i] = (Price[i] - P) * (Price[i] - P);
-            double sd = Math.Sqrt((sum.Sum()) / (Sims));
-            return sd;
+            double sd = Math.Sqrt((sum.Sum()) / (Sims-1));
+            double se = sd / Math.Sqrt(Sims);
+            return se;
         }
         public static double[] OptionPrice(double S, double K, double Mu, double Sigma, double T, int Sims, int Steps, bool IsCall, double[,] Epsilon)
         {
