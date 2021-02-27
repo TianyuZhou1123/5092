@@ -30,7 +30,7 @@ namespace MonteC
         //IsCall means to judge if it is a call option
         public double[,] Epsilon { get { return randomnumber; } set { randomnumber = value; } }
         //Epsilon means generate the random numbers
-        public static double std(int Sims, double[] Price) //calculate std
+        public static double std(int Sims, double[] Price) //calculate standard error
         {
             double P = Price.Average();
             double[] sum = new double[Sims];
