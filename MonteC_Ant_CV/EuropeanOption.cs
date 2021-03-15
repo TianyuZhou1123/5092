@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,9 +45,9 @@ namespace MonteC
             double sdsquared = (sum.Sum()) / (Sims - 1);//Price1 Price2 are identically distributed, so their Var are the same
             return sdsquared;
         }
-        public static double BSDelta(double S, double K, double r, double Sigma, double dt, bool IsCall)
+        public static double BSDelta(double S, double K, double r, double Sigma, double T, bool IsCall)
         {
-            double d1 = (Math.Log(S / K) + (r + 0.5 * Math.Pow(Sigma, 2)) * dt) / (Sigma * Math.Sqrt(dt));
+            double d1 = (Math.Log(S / K) + (r + 0.5 * Math.Pow(Sigma, 2)) * T) / (Sigma * Math.Sqrt(T));
             if (IsCall == true)
                 return cdf(d1);
             else
@@ -58,6 +58,7 @@ namespace MonteC
             double optionprice = 0;
             double se = 0;
             double[] result = new double[2];
+            int beta1 = -1;
             if (Ant == true)
             {
                 double[,] allsims = new double[2 * Sims, Steps + 1];
@@ -84,17 +85,20 @@ namespace MonteC
                         }
                         if (IsCall == true)
                         {
-                            CT[i] = (Math.Max(allsims[i, Steps] - K, 0) - cv) * Math.Exp(-Mu * T);
+                            CT[i] = (Math.Max(allsims[i, Steps] - K, 0) + beta1 * cv) * Math.Exp(-Mu * T);
                         }
-                        else
+                        else //Put
                         {
-                            CT[i] = (Math.Max(K - allsims[i, Steps], 0) - cv) * Math.Exp(-Mu * T);
+                            CT[i] = (Math.Max(K - allsims[i, Steps], 0) + beta1 * cv) * Math.Exp(-Mu * T);
                         }
                     }
                     optionprice = CT.Average();
-                    se = Math.Sqrt(std(2 * Sims, CT) / (2 * Sims));
+                    double[] C = new double[Sims];
+                    for (int i = 0; i < Sims; i++)
+                        C[i] = (CT[i] + CT[i + Sims] ) / 2;
+                    se = Math.Sqrt(std(Sims, C) / ( Sims));
                 }
-                else
+                else //not choose CV
                 {
                     double[] value = new double[2 * Sims];
                     double sum = 0;
@@ -102,32 +106,32 @@ namespace MonteC
                     {
                         for (int i = 0; i < Sims; i++)
                         {
-                            value[i] = Math.Max(allsims[i, Steps] - K, 0);
-                            value[i + Sims] = Math.Max(allsims[i + Sims, Steps] - K, 0);
+                            value[i] = Math.Max(allsims[i, Steps] - K, 0) * Math.Exp(-Mu * T);
+                            value[i + Sims] = Math.Max(allsims[i + Sims, Steps] - K, 0) * Math.Exp(-Mu * T);
                             sum += value[i];
                         }
                     }
-                    else
+                    else //Put
                     {
                         for (int i = 0; i < Sims; i++)
                         {
-                            value[i] = Math.Max(K - allsims[i, Steps], 0);
-                            value[i + Sims] = Math.Max(K - allsims[i + Sims, Steps], 0);
+                            value[i] = Math.Max(K - allsims[i, Steps], 0) * Math.Exp(-Mu * T);
+                            value[i + Sims] = Math.Max(K - allsims[i + Sims, Steps], 0) * Math.Exp(-Mu * T);
                             sum += value[i];
                         }
                     }
                     //calculate option price
-                    optionprice = sum / Sims * Math.Exp(-Mu * T);
+                    optionprice = value.Average();
                     double[] C = new double[Sims];
                     for (int i = 0; i < Sims; i++)
-                        C[i] = (value[i] * Math.Exp(-Mu * T) + value[i + Sims] * Math.Exp(-Mu * T)) / 2;
+                        C[i] = (value[i] + value[i + Sims] ) / 2;
                     se = Math.Sqrt(std(Sims, C) / Sims);
                 }
                 //store them to a matrix
                 result[0] = optionprice;
                 result[1] = se;
             }
-            else//not choosing Ant Var
+            else//not Ant Var
             {
                 double[,] allsims = new double[Sims, Steps + 1];
                 for (int i = 0; i < Sims; i++)
@@ -148,14 +152,14 @@ namespace MonteC
                             cv += delta * (allsims[i, j + 1] - allsims[i, j] * Math.Exp(Mu * (T / Steps)));
                         }
                         if (IsCall == true)
-                            CT[i] = (Math.Max(allsims[i, Steps] - K, 0) - cv) * Math.Exp(-Mu * T);
+                            CT[i] = (Math.Max(allsims[i, Steps] - K, 0) +beta1 * cv) * Math.Exp(-Mu * T);
                         else
-                            CT[i] = (Math.Max(K - allsims[i, Steps], 0) - cv) * Math.Exp(-Mu * T);
+                            CT[i] = (Math.Max(K - allsims[i, Steps], 0) + beta1 * cv) * Math.Exp(-Mu * T);
                     }
                     optionprice = CT.Average();
                     se = Math.Sqrt(std(Sims, CT) / Sims);
                 }
-                else
+                else //not CV
                 {
                     double[] value = new double[Sims];
                     if (IsCall == true)
