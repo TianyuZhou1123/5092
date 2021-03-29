@@ -90,7 +90,7 @@ namespace MonteC
             {
                 Task.Run(() =>
                 {
-                    //异步方法 开了4个线程
+                    //Asynchronous thread 4 thread
                     OptionV = new EuropeanOption(S, K, r, Sigma, T, Trials, steps, iscall, ant, cv, mt);
                     inprogress(20);
 
@@ -119,7 +119,7 @@ namespace MonteC
             else
             {
 
-                //同步方法 1个线程
+                //synchronous thread
                 OptionV = new EuropeanOption(S, K, r, Sigma, T, Trials, steps, iscall, ant, cv, mt);
                 inprogress(20);
 
