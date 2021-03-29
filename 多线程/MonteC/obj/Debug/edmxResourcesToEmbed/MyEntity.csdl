@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MyEntity" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="MyEntityContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EuropeanOptionSet" EntityType="MyEntity.EuropeanOption" />
+    <EntitySet Name="GreekvaluesSet" EntityType="MyEntity.Greekvalues" />
+    <EntitySet Name="Entity1Set" EntityType="MyEntity.Entity1" />
+    <EntitySet Name="RandomNumberSet" EntityType="MyEntity.RandomNumber" />
+  </EntityContainer>
+  <EntityType Name="EuropeanOption">
+    <Key>
+      <PropertyRef Name="UnderlyingId" />
+    </Key>
+    <Property Name="UnderlyingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Strike_Price" Type="String" Nullable="false" />
+    <Property Name="Tenor" Type="String" Nullable="false" />
+    <Property Name="Volitility" Type="String" Nullable="false" />
+    <Property Name="IsCall" Type="String" Nullable="false" />
+    <Property Name="Interest_rate" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Greekvalues">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Delta" Type="String" Nullable="false" />
+    <Property Name="Gamma" Type="String" Nullable="false" />
+    <Property Name="Vega" Type="String" Nullable="false" />
+    <Property Name="Theta" Type="String" Nullable="false" />
+    <Property Name="Rho" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Entity1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="RandomNumber">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+</Schema>
