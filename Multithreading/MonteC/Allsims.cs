@@ -20,7 +20,7 @@ namespace MonteC
             int cores_num;
             if (MT)
                 //cores_num =4;
-                cores_num = 4;
+                cores_num =  System.Environment.ProcessorCount;
             else
                 cores_num = 1;
             int each_task;
