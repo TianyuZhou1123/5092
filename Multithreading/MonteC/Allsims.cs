@@ -33,7 +33,7 @@ namespace MonteC
             //allsims store the price of each step
             double[,] allsims;
             if (Ant)
-                allsims = new double[Sims, Steps + 1];
+                allsims = new double[2*Sims, Steps + 1];
             else
                 allsims = new double [Sims, Steps + 1];
             //let the first column be S
