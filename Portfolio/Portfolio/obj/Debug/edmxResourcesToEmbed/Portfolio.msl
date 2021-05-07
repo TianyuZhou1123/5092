@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="mfmModelStoreContainer" CdmEntityContainer="mfmEntities">
+    <EntitySetMapping Name="Instruments">
+      <EntityTypeMapping TypeName="mfmModel.Instrument">
+        <MappingFragment StoreEntitySet="Instrument">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Exchange" ColumnName="Exchange" />
+          <ScalarProperty Name="Underlying" ColumnName="Underlying" />
+          <ScalarProperty Name="Strike" ColumnName="Strike" />
+          <ScalarProperty Name="Tenor" ColumnName="Tenor" />
+          <ScalarProperty Name="IsCall" ColumnName="IsCall" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="Rebate" ColumnName="Rebate" />
+          <ScalarProperty Name="Barrier" ColumnName="Barrier" />
+          <ScalarProperty Name="BarrierType" ColumnName="BarrierType" />
+          <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InstTypes">
+      <EntityTypeMapping TypeName="mfmModel.InstType">
+        <MappingFragment StoreEntitySet="InstType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Typename" ColumnName="Typename" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InterestRates">
+      <EntityTypeMapping TypeName="mfmModel.InterestRate">
+        <MappingFragment StoreEntitySet="InterestRate">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Tenor" ColumnName="Tenor" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockPrices">
+      <EntityTypeMapping TypeName="mfmModel.StockPrice">
+        <MappingFragment StoreEntitySet="StockPrice">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="InstrumentID" ColumnName="InstrumentID" />
+          <ScalarProperty Name="ClosingPrice" ColumnName="ClosingPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="mfmModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trades">
+      <EntityTypeMapping TypeName="mfmModel.Trade">
+        <MappingFragment StoreEntitySet="Trade">
+          <ScalarProperty Name="TradeID" ColumnName="TradeID" />
+          <ScalarProperty Name="IsBuy" ColumnName="IsBuy" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="InstrumentID" ColumnName="InstrumentID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

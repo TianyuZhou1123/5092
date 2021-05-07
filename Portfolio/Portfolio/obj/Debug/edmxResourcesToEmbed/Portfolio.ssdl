@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mfmModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Instrument">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="50" />
+    <Property Name="Exchange" Type="varchar(max)" />
+    <Property Name="Underlying" Type="varchar(max)" />
+    <Property Name="Strike" Type="float" />
+    <Property Name="Tenor" Type="float" />
+    <Property Name="IsCall" Type="bit" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="Rebate" Type="float" />
+    <Property Name="Barrier" Type="float" />
+    <Property Name="BarrierType" Type="varchar(max)" />
+    <Property Name="Ticker" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="InstType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Typename" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="InterestRate">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tenor" Type="float" />
+    <Property Name="Rate" Type="float" />
+  </EntityType>
+  <EntityType Name="StockPrice">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="date" />
+    <Property Name="InstrumentID" Type="int" />
+    <Property Name="ClosingPrice" Type="float" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Trade">
+    <Key>
+      <PropertyRef Name="TradeID" />
+    </Key>
+    <Property Name="TradeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsBuy" Type="bit" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="InstrumentID" Type="int" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Timestamp" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Instrument_InstType">
+    <End Role="InstType" Type="Self.InstType" Multiplicity="1" />
+    <End Role="Instrument" Type="Self.Instrument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Instrument">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockPrice_Instrument">
+    <End Role="Instrument" Type="Self.Instrument" Multiplicity="0..1" />
+    <End Role="StockPrice" Type="Self.StockPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StockPrice">
+        <PropertyRef Name="InstrumentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Trade_Instrument1">
+    <End Role="Instrument" Type="Self.Instrument" Multiplicity="0..1" />
+    <End Role="Trade" Type="Self.Trade" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instrument">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Trade">
+        <PropertyRef Name="InstrumentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="mfmModelStoreContainer">
+    <EntitySet Name="Instrument" EntityType="Self.Instrument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InstType" EntityType="Self.InstType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InterestRate" EntityType="Self.InterestRate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockPrice" EntityType="Self.StockPrice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trade" EntityType="Self.Trade" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Instrument_InstType" Association="Self.FK_Instrument_InstType">
+      <End Role="InstType" EntitySet="InstType" />
+      <End Role="Instrument" EntitySet="Instrument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockPrice_Instrument" Association="Self.FK_StockPrice_Instrument">
+      <End Role="Instrument" EntitySet="Instrument" />
+      <End Role="StockPrice" EntitySet="StockPrice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Trade_Instrument1" Association="Self.FK_Trade_Instrument1">
+      <End Role="Instrument" EntitySet="Instrument" />
+      <End Role="Trade" EntitySet="Trade" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
